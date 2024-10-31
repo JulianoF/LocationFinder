@@ -36,9 +36,9 @@
     <ScrollView
         android:id="@+id/itemViewArea"
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="500dp"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="5dp"
         android:elevation="2dp"
         android:outlineProvider="paddedBounds"
@@ -47,13 +47,21 @@
         app:layout_constraintTop_toBottomOf="@id/searchBar">
 
         <LinearLayout
+            android:id="@+id/card_inner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/location_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
     </ScrollView>
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/addNewButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
