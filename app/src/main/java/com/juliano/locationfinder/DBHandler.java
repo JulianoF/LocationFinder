@@ -46,6 +46,11 @@ public class DBHandler extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * Adds a new location to the database.
+     *
+     * @param loc The Location object containing address, latitude, and longitude to be added.
+     */
     public void addLocation(Location loc){
         SQLiteDatabase db = getWritableDatabase();
         String address = loc.getAddress();
@@ -65,6 +70,12 @@ public class DBHandler extends SQLiteOpenHelper {
         }
 
     }
+
+    /**
+     * Updates an existing location in the database.
+     *
+     * @param loc The Location object containing the updated details (address, latitude, longitude).
+     */
     public void updateLocation(Location loc){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -76,11 +87,21 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Deletes a location from the database based on its ID.
+     *
+     * @param id The unique identifier of the location to be deleted.
+     */
     public void deleteLocation(int id){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_LOCATIONS, KEY_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
+    /**
+     * Retrieves all locations from the database.
+     *
+     * @return A Cursor object containing all location records from the database.
+     */
     public Cursor getAllLocations() {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_LOCATIONS;
@@ -93,6 +114,12 @@ public class DBHandler extends SQLiteOpenHelper {
         return cursor;
     }
 
+    /**
+     * Searches for locations in the database by matching the address to a user's input.
+     *
+     * @param userInput The string to search for in the address field.
+     * @return A Cursor object containing the search results matching the user's input.
+     */
     public Cursor searchLocations(String userInput) {
         SQLiteDatabase db = this.getReadableDatabase();
         String query = "SELECT * FROM " + TABLE_LOCATIONS + " WHERE " + KEY_ADDRESS + " LIKE ?";

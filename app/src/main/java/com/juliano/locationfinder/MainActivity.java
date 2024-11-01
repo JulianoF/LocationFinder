@@ -35,14 +35,17 @@ public class MainActivity extends AppCompatActivity {
 
         Button addNewButton = findViewById(R.id.addNewButton);
 
+        // Initialize and set up the "Add New" button to navigate to ItemAddActivity
         addNewButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                // Start ItemAddActivity with "isEdit" flag set to false to indicate a new item is being added
                 Intent intent = new Intent(getApplicationContext(), ItemAddActivity.class);
                 intent.putExtra("isEdit",false);
                 startActivity(intent);
             }
         });
 
+        // Set up the search view for querying locations
         searchView = (SearchView) findViewById(R.id.searchBar);
         searchView.setQueryHint("Search For Locations");
         searchView.setOnClickListener(v -> searchView.setIconified(false));
@@ -59,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
+                // Perform a search with the entered query and update the displayed locations
                 Cursor cursor = db.searchLocations(query);
                 populateSpinner(db,cursor);
                 return false;
@@ -66,10 +70,12 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                // If the search text is cleared, display all locations
                 if(newText.isEmpty()){
                     Cursor cursor = db.getAllLocations();
                     populateSpinner(db,cursor);
                 }else{
+                    // Otherwise, search for locations matching the new text
                     Cursor cursor = db.searchLocations(newText);
                     populateSpinner(db,cursor);
                 }
@@ -78,6 +84,15 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Populates the layout with location cards based on data from the provided database cursor.
+     * Each card displays the location's address, latitude, and longitude, and includes buttons
+     * for viewing and editing the location details.
+     *
+     * @param db the {@link DBHandler} instance used to manage database interactions
+     * @param cursor the {@link Cursor} containing the location data to populate the layout.
+     *
+     */
     private void populateSpinner(DBHandler db,Cursor cursor){
 
         LinearLayout locationCardsLayout = findViewById(R.id.card_inner);
