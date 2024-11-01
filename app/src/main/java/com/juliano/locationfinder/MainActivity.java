@@ -59,16 +59,19 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-
+                Cursor cursor = db.searchLocations(query);
+                populateSpinner(db,cursor);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 if(newText.isEmpty()){
-
+                    Cursor cursor = db.getAllLocations();
+                    populateSpinner(db,cursor);
                 }else{
-
+                    Cursor cursor = db.searchLocations(newText);
+                    populateSpinner(db,cursor);
                 }
                 return false;
             }
